@@ -41,6 +41,7 @@ public class TLSSUL implements SUL<String, String> {
 		tls.setRequireRestart(config.restart);
 		tls.setReceiveMessagesTimeout(config.timeout);
 		tls.setKeystore(config.keystore_filename, config.keystore_password);
+		tls.setConsoleOutput(config.console_output);
 		
 		if(config.version.equals("tls10")) {
 			tls.useTLS10();

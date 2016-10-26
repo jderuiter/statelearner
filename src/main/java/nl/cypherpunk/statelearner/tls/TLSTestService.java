@@ -90,7 +90,7 @@ public class TLSTestService {
 	boolean ENABLE_HEARTBEAT = true;
 	
 	// Send output from TLS implementation to console
-	boolean CONSOLE_OUTPUT = true;
+	boolean CONSOLE_OUTPUT = false;
 
 	// Set default TLS version to use
 	TLS currentTLS = new TLS12();
@@ -1391,12 +1391,14 @@ public class TLSTestService {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		if(args.length >= 2) {
+		if(args.length >= 3) {
 			TLSTestService tls = new TLSTestService();
 			tls.setTarget("server");
-			tls.setHost(args[1]);
-			tls.setPort(new Integer(args[0]));
+			tls.setHost(args[0]);
+			tls.setPort(new Integer(args[1]));
+			tls.setCommand(args[2]);
 			tls.setReceiveMessagesTimeout(100);
+			tls.setConsoleOutput(false);
 			
 			tls.start();
 			

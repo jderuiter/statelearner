@@ -37,6 +37,7 @@ public class TLSConfig extends LearningConfig {
 	int port;
 	
 	boolean restart;
+	boolean console_output;
 	int timeout;
 	
 	public TLSConfig(String filename) throws IOException {
@@ -83,6 +84,11 @@ public class TLSConfig extends LearningConfig {
 		
 		if(properties.getProperty("port") != null)
 			port = Integer.parseInt(properties.getProperty("port"));
+
+		if(properties.getProperty("console_output") != null)
+			console_output = Boolean.parseBoolean(properties.getProperty("console_output"));
+		else
+			console_output = false;
 		
 		if(properties.getProperty("restart") != null)
 			restart = Boolean.parseBoolean(properties.getProperty("restart"));
