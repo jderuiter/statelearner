@@ -212,7 +212,7 @@ public class TLSTestService {
 					pb.inheritIO();
 				}
 				else {
-					pb.redirectError(new File("error.log"));
+					pb.redirectErrorStream(true);
 					pb.redirectOutput(new File("output.log"));
 				}
 				
@@ -241,7 +241,7 @@ public class TLSTestService {
 					pb.inheritIO();
 				}
 				else {
-					pb.redirectError(new File("error.log"));
+					pb.redirectErrorStream(true);
 					pb.redirectOutput(new File("output.log"));
 				}
 				 
@@ -271,7 +271,7 @@ public class TLSTestService {
 					pb.inheritIO();
 				}
 				else {
-					pb.redirectError(new File("error.log"));
+					pb.redirectErrorStream(true);
 					pb.redirectOutput(new File("output.log"));
 				}
 				
@@ -302,7 +302,7 @@ public class TLSTestService {
 					pb.inheritIO();
 				}
 				else {
-					pb.redirectError(new File("error.log"));
+					pb.redirectErrorStream(true);
 					pb.redirectOutput(new File("output.log"));
 				}
 	

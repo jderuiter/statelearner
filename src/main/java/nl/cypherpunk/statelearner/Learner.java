@@ -36,6 +36,7 @@ import de.learnlib.algorithms.kv.mealy.KearnsVaziraniMealy;
 import de.learnlib.algorithms.lstargeneric.mealy.ExtensibleLStarMealyBuilder;
 import de.learnlib.algorithms.malerpnueli.MalerPnueliMealy;
 import de.learnlib.algorithms.rivestschapire.RivestSchapireMealy;
+import de.learnlib.algorithms.ttt.base.TTTState;
 import de.learnlib.algorithms.ttt.mealy.TTTLearnerMealy;
 import de.learnlib.api.EquivalenceOracle;
 import de.learnlib.api.LearningAlgorithm;
@@ -133,9 +134,9 @@ public class Learner {
         // Count the number of queries actually sent to the SUL
 		statsMemOracle = new MealyCounterOracle<String, String>(logMemOracle, "membership queries to SUL");
 		// Use cache oracle to prevent double queries to the SUL
-		cachedMemOracle = MealyCacheOracle.createDAGCacheOracle(alphabet, statsMemOracle);
+		//cachedMemOracle = MealyCacheOracle.createDAGCacheOracle(alphabet, statsMemOracle);
         // Count the number of queries to the cache
-		statsCachedMemOracle = new MealyCounterOracle<String, String>(cachedMemOracle, "membership queries to cache");
+		statsCachedMemOracle = new MealyCounterOracle<String, String>(statsMemOracle, "membership queries to cache");
 		
 		// Instantiate the selected learning algorithm
 		switch(algorithm.toLowerCase()) {
@@ -178,9 +179,9 @@ public class Learner {
 		// Add an oracle that counts the number of queries
 		statsEqOracle = new MealyCounterOracle<String, String>(logEqOracle, "equivalence queries to SUL");
 		// Use cache oracle to prevent double queries to the SUL
-		cachedEqOracle = MealyCacheOracle.createDAGCacheOracle(alphabet, statsEqOracle);
+		//cachedEqOracle = MealyCacheOracle.createDAGCacheOracle(alphabet, statsEqOracle);
         // Count the number of queries to the cache
-		statsCachedEqOracle = new MealyCounterOracle<String, String>(cachedEqOracle, "equivalence queries to cache");
+		statsCachedEqOracle = new MealyCounterOracle<String, String>(statsEqOracle, "equivalence queries to cache");
 		
 		// Instantiate the selected equivalence algorithm
 		switch(algorithm.toLowerCase()) {
@@ -241,7 +242,7 @@ public class Learner {
 				
 				// Write outputs
 				writeDotModel(hypothesis, alphabet, config.output_dir + "/learnedModel.dot");
-				writeAutModel(hypothesis, alphabet, config.output_dir + "/learnedModel.aut");
+				//writeAutModel(hypothesis, alphabet, config.output_dir + "/learnedModel.aut");
 			}
 			else {
 				// Counter example found, update hypothesis and continue learning

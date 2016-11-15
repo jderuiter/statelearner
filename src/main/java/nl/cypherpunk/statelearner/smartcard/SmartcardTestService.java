@@ -211,14 +211,5 @@ public class SmartcardTestService {
 		}
 		
 		System.out.println(String.join(";", outputs));
-		/*
-		System.out.println(sc.processCommand("SELECT PKCS11"));
-		System.out.println(sc.processCommand("SELECT Challenge"));
-		System.out.println(sc.processCommand("EXTERNAL AUTHENTICATE"));
-		System.out.println(sc.processCommand("READ"));
-		System.out.println(sc.processCommand("SELECT Key"));
-		System.out.println(sc.processCommand("SELECT Attribute"));
-		System.out.println(sc.processCommand("WRITE DATA"));
-		*/
 	}
 }

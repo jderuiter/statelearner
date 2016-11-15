@@ -4,6 +4,12 @@ StateLearner is a tool that can learn state machines from implementations using 
 
 This tool can be used for TLS implementations, smart cards and can be extended using its socket module. 
 
+## Build
+
+Build a self-contained jar file using the following command:
+
+`mvn package shade:shade`
+
 ## Publications
 
 StateLearner (or one of its predecessors) has been used in the following publications:

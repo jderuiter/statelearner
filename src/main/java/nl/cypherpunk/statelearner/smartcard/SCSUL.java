@@ -16,6 +16,7 @@
 
 package nl.cypherpunk.statelearner.smartcard;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 import net.automatalib.words.impl.SimpleAlphabet;
@@ -28,21 +29,31 @@ import de.learnlib.api.SUL;
  */
 public class SCSUL implements SUL<String, String> {
 	SmartcardTestService scTestService;
+	SimpleAlphabet<String> alphabet;
+	String[] prefix = {};
 
 	public SCSUL(HashMap<String, byte[][]> apduDictionary) throws Exception {
 		// Initialise test service
 		scTestService = new  SmartcardTestService(apduDictionary);
+		alphabet = new SimpleAlphabet<String>(scTestService.getAPDUDictionary().keySet());
 	}
 	
 	public SCSUL(SCConfig config) throws Exception {
 		// Initialise test service
 		scTestService = new SmartcardTestService();
 		scTestService.loadAPDUDictionary(config.apdu_file);
+
+		if(config.alphabet != null)
+			alphabet = new SimpleAlphabet<String>(Arrays.asList(config.alphabet.split(" ")));
+		else
+			alphabet = new SimpleAlphabet<String>(scTestService.getAPDUDictionary().keySet());
+
+		if(config.prefix != null)
+			prefix = config.prefix.split(" ");		
 	}
 	
 	public SimpleAlphabet<String> getAlphabet() {
 		// Get alphabet from the SmartcardService's APDU dictionary
-		SimpleAlphabet<String> alphabet = new SimpleAlphabet<String>(scTestService.getAPDUDictionary().keySet());
 		return alphabet;
 	}
 
@@ -69,6 +80,10 @@ public class SCSUL implements SUL<String, String> {
 		try {
 			// Reset test service
 			scTestService.reset();
+			
+			for(String cmd: prefix) {
+				scTestService.sendCommand(cmd);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(0);

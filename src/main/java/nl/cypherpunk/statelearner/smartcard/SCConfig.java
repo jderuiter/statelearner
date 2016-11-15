@@ -22,7 +22,9 @@ import nl.cypherpunk.statelearner.LearningConfig;
 
 public class SCConfig extends LearningConfig {
 	String apdu_file;
-
+	String alphabet;
+	String prefix;
+	
 	public SCConfig(String filename) throws IOException {
 		super(filename);
 	}
@@ -37,5 +39,11 @@ public class SCConfig extends LearningConfig {
 
 		if(properties.getProperty("apdu_file") != null)
 			apdu_file = properties.getProperty("apdu_file");
+		
+		if(properties.getProperty("alphabet") != null)
+			alphabet = properties.getProperty("alphabet");
+		
+		if(properties.getProperty("prefix") != null)
+			prefix = properties.getProperty("prefix");
 	}
 }
