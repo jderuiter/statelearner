@@ -4,11 +4,26 @@ StateLearner is a tool that can learn state machines from implementations using 
 
 This tool can be used for TLS implementations, smart cards and can be extended using its socket module. 
 
+## Requirements
+
+* graphviz
+
 ## Build
 
 Build a self-contained jar file using the following command:
 
 `mvn package shade:shade`
+
+## Usage
+
+`java -jar stateLearner-0.0.1-SNAPSHOT.jar <configuration file>`
+
+Example configurations can be found in the 'examples' directory. To run the OpenSSL example:
+
+```
+cd examples/openssl
+java -jar ../../target/stateLearner-0.0.1-SNAPSHOT.jar server.properties
+```
 
 ## Publications
 
