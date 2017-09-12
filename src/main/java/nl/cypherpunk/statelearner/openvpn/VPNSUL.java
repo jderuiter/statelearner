@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2016 Joeri de Ruiter
+ *  Copyright (c) 2017 Lesly-Ann Daniel
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -14,43 +14,48 @@
  *  limitations under the License.
  */
 
-package nl.cypherpunk.statelearner.tls;
+package nl.cypherpunk.statelearner.openvpn;
 
+import java.net.SocketException;
 import java.util.Arrays;
 
 import de.learnlib.api.SUL;
 import net.automatalib.words.impl.SimpleAlphabet;
-import nl.cypherpunk.statelearner.tls.TLSTestService;
 
-/**
- * @author Joeri de Ruiter (joeri@cs.ru.nl)
- */
-public class TLSSUL implements SUL<String, String> {
+
+public class VPNSUL implements SUL<String, String> {
 	SimpleAlphabet<String> alphabet;
-	TLSTestService tls;
+	VPNTestService vpn;
 	
-	public TLSSUL(TLSConfig config) throws Exception {
+	public VPNSUL(VPNConfig config) throws Exception {
 		alphabet = new SimpleAlphabet<String>(Arrays.asList(config.alphabet.split(" ")));
 		
-		tls = new TLSTestService();
-		
-		tls.setTarget(config.target);
-		tls.setHost(config.host);
-		tls.setPort(config.port);
-		tls.setCommand(config.cmd);
-		tls.setRestartTarget(config.restart);
-		tls.setReceiveMessagesTimeout(config.timeout);
-		tls.setKeystore(config.keystore_filename, config.keystore_password);
-		tls.setConsoleOutput(config.console_output);
-		
-		if(config.version.equals("tls10")) {
-			tls.useTLS10();
+		if(config.proto.equals("tcp")) {
+			vpn = new VPNTestServiceTCP();
+		} else {
+			vpn = new VPNTestServiceUDP();
 		}
-		else {
-			tls.useTLS12();
+		vpn.setTarget(config.target);
+		vpn.setLocal(config.local);
+		vpn.setRemote(config.remote);
+		vpn.setLocalPort(config.localPort);
+		vpn.setRemotePort(config.remotePort);
+		
+		vpn.setAuth(config.auth);
+		vpn.setCipher(config.cipher);
+		if(config.cmd.equals("")) {
+			vpn.setCommand(config.version, config.proto, config.method);
+		} else {
+			vpn.setCommand(config.cmd);
 		}
 		
-		tls.start();
+		try {
+			vpn.start();
+		} catch(SocketException e) {
+			e.printStackTrace();
+			vpn.closeSocket();
+			vpn.close();
+		}
 	}
 	
 	public SimpleAlphabet<String> getAlphabet() {
@@ -65,7 +70,7 @@ public class TLSSUL implements SUL<String, String> {
 	public String step(String symbol) {
 		String result = null;
 		try {
-			result = tls.processSymbol(symbol);
+			result = vpn.processSymbol(symbol);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -75,15 +80,14 @@ public class TLSSUL implements SUL<String, String> {
 	@Override
 	public void pre() {
 		try {
-			tls.reset();
+			vpn.reset();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(0);
-		}	
+		}
 	}
 
 	@Override
 	public void post() {
 	}
-	
 }

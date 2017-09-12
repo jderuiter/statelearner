@@ -33,6 +33,8 @@ public class CipherSuite {
 	public final static byte[] TLS_RSA_WITH_AES_128_CBC_SHA = new byte[] {0x00, 0x2F};
 	public final static byte[] TLS_DHE_RSA_WITH_AES_128_CBC_SHA = new byte[] {0x00, 0x33};
 	public final static byte[] TLS_RSA_WITH_3DES_EDE_CBC_SHA = new byte[] {0x00, 0x0A};
+	public final static byte[] TLS_DHE_RSA_WITH_AES_256_GCM_SHA384 = new byte[] {0x00, (byte)0x9f};
+	public final static byte[] TLS_DHE_RSA_WITH_AES_256_CBC_SHA = new byte[] {0x00, 0x39};
 	
 	Cipher keyExchangeCipher;
 	String keyExchange;
@@ -97,7 +99,19 @@ public class CipherSuite {
 			
 			macCipherAlg = "HmacSHA1";
 			hashSize = 20;
-		}		
+		}
+		else if(cipherSuite[0] == TLS_DHE_RSA_WITH_AES_256_CBC_SHA[0] && cipherSuite[1] == TLS_DHE_RSA_WITH_AES_256_CBC_SHA[1]) {
+			keyExchangeCipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+			keyExchange = ALG_DHE_RSA;
+			
+			encCipherAlg = "AES/CBC/NoPadding";
+			encCipherKeyAlg = "AES";
+			encCipherKeySize = 32;
+			ivSize = 16;
+			
+			macCipherAlg = "HmacSHA1";
+			hashSize = 20;
+		}
 		else {
 			System.out.println("Unknown cipher suite: " + cipherSuite[0] + "  "  + cipherSuite[1]);
 		}

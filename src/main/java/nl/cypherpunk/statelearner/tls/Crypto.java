@@ -43,6 +43,7 @@ public class Crypto {
 	
 	public static final byte[] HASH_SIGNATURE_ALGORITHM_SHA1RSA = {HASH_ALGORITHM_SHA1, SIGNATURE_ALGORITHM_RSA};
 	public static final byte[] HASH_SIGNATURE_ALGORITHM_SHA256RSA = {HASH_ALGORITHM_SHA256, SIGNATURE_ALGORITHM_RSA};
+	public static final byte[] HASH_SIGNATURE_ALGORITHM_SHA384RSA = {HASH_ALGORITHM_SHA384, SIGNATURE_ALGORITHM_RSA};
 	
 	public static byte[] MD5(byte[] message) throws NoSuchAlgorithmException {
 		MessageDigest md = MessageDigest.getInstance("MD5");
@@ -56,6 +57,11 @@ public class Crypto {
 	
 	public static byte[] SHA256(byte[] message) throws NoSuchAlgorithmException {
 		MessageDigest md = MessageDigest.getInstance("SHA-256");
+		return md.digest(message);
+	}
+	
+	public static byte[] SHA384(byte[] message) throws NoSuchAlgorithmException {
+		MessageDigest md = MessageDigest.getInstance("SHA-384");
 		return md.digest(message);
 	}
 	
@@ -112,6 +118,13 @@ public class Crypto {
 	
 	public static byte[] SIGN_RSA_SHA256(PrivateKey key, byte[] data) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
 		Signature instance = Signature.getInstance("SHA256withRSA");
+		instance.initSign(key);
+		instance.update(data);
+		return instance.sign();
+	}
+	
+	public static byte[] SIGN_RSA_SHA384(PrivateKey key, byte[] data) throws NoSuchAlgorithmException, InvalidKeyException, SignatureException {
+		Signature instance = Signature.getInstance("SHA384withRSA");
 		instance.initSign(key);
 		instance.update(data);
 		return instance.sign();

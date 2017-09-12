@@ -36,7 +36,6 @@ import de.learnlib.algorithms.kv.mealy.KearnsVaziraniMealy;
 import de.learnlib.algorithms.lstargeneric.mealy.ExtensibleLStarMealyBuilder;
 import de.learnlib.algorithms.malerpnueli.MalerPnueliMealy;
 import de.learnlib.algorithms.rivestschapire.RivestSchapireMealy;
-import de.learnlib.algorithms.ttt.base.TTTState;
 import de.learnlib.algorithms.ttt.mealy.TTTLearnerMealy;
 import de.learnlib.api.EquivalenceOracle;
 import de.learnlib.api.LearningAlgorithm;
@@ -64,6 +63,8 @@ import nl.cypherpunk.statelearner.socket.SocketSUL;
 import nl.cypherpunk.statelearner.tls.TLSConfig;
 import nl.cypherpunk.statelearner.tls.TLSSUL;
 import nl.cypherpunk.statelearner.LogOracle.MealyLogOracle;
+import nl.cypherpunk.statelearner.openvpn.VPNConfig;
+import nl.cypherpunk.statelearner.openvpn.VPNSUL;
 
 /**
  * @author Joeri de Ruiter (joeri@cs.ru.nl)
@@ -120,6 +121,13 @@ public class Learner {
 			// Create the TLS SUL
 			sul = new TLSSUL(new TLSConfig(config));
 			alphabet = ((TLSSUL)sul).getAlphabet();			
+		}
+		else if(config.type == LearningConfig.TYPE_VPN) {
+			log.log(Level.INFO, "Using VPN SUL");
+			
+			// Create the VPN SUL
+			sul = new VPNSUL(new VPNConfig(config));
+			alphabet = ((VPNSUL)sul).getAlphabet();			
 		}
 		
 		loadLearningAlgorithm(config.learning_algorithm, alphabet, sul);

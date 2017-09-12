@@ -1,5 +1,6 @@
 /*
  *  Copyright (c) 2016 Joeri de Ruiter
+ *  Modifications copyright (C) 2017 Lesly-Ann Daniel
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -41,6 +42,8 @@ import de.learnlib.oracles.DefaultQuery;
  */
 public class ModifiedWMethodEQOracle<A extends UniversalDeterministicAutomaton<?, I, ?, ?, ?> & Output<I, D>, I, D>
 		implements EquivalenceOracle<A, I, D> {
+	private static final int NB_LOOP = 5;
+	
 	public static class DFAModifiedWMethodEQOracle<I> extends ModifiedWMethodEQOracle<DFA<?, I>, I, Boolean>
 			implements DFAEquivalenceOracle<I> {
 		public DFAModifiedWMethodEQOracle(int maxDepth, MembershipOracle<I, Boolean> sulOracle) {
@@ -105,10 +108,29 @@ public class ModifiedWMethodEQOracle<A extends UniversalDeterministicAutomaton<?
 		for (Word<I> trans : transCover) {
 			query = new DefaultQuery<>(trans);
 			sulOracle.processQueries(Collections.singleton(query));
-
 			hypOutput = hypothesis.computeOutput(trans);
-			if (!Objects.equals(hypOutput, query.getOutput()))
-				return query;
+			
+			// A counterexample is found
+			if (!Objects.equals(hypOutput, query.getOutput())) {
+				int loop = 0;
+				do {
+					// If the querry is different for NB_LOOP times, then there is a problem on non-determinism
+					if(loop++ == NB_LOOP)
+						throw new NondeterministicBehaviorException(
+								"Failed to get an deterministic output for querry: " + query.getInput());
+					// Check if it is a real counterexample or if it is due to non-deterministic behavior
+					DefaultQuery<I, D> testQuery = new DefaultQuery<>(query.getInput());
+					sulOracle.processQueries(Collections.singleton(testQuery));
+					
+					// It is a real counterexample
+					if (Objects.equals(testQuery.getOutput(), query.getOutput())) {
+						return query;
+					}
+					
+					// The old query takes the new query value
+					query = testQuery;
+				} while (!Objects.equals(hypOutput, query.getOutput()));
+			}
 
 			output = query.getOutput().toString();
 
@@ -139,8 +161,27 @@ public class ModifiedWMethodEQOracle<A extends UniversalDeterministicAutomaton<?
 	
 					hypOutput = hypothesis.computeOutput(queryWord);
 	
-					if (!Objects.equals(hypOutput, query.getOutput()))
-						return query;
+					// A counterexample is found
+					if (!Objects.equals(hypOutput, query.getOutput())) {
+						int loop = 0;
+						do {
+							// If the querry is different for NB_LOOP times, then there is a problem on non-determinism
+							if(loop++ == NB_LOOP)
+								throw new NondeterministicBehaviorException(
+										"Failed to get an deterministic output for querry: " + query.getInput());
+							// Check if it is a real counterexample or if it is due to non-deterministic behavior
+							DefaultQuery<I, D> testQuery = new DefaultQuery<>(query.getInput());
+							sulOracle.processQueries(Collections.singleton(testQuery));
+							
+							// It is a real counterexample
+							if (Objects.equals(testQuery.getOutput(), query.getOutput())) {
+								return query;
+							}
+							
+							// The old query takes the new query value
+							query = testQuery;
+						} while (!Objects.equals(hypOutput, query.getOutput()));
+					}
 	
 					output = query.getOutput().toString();
 	
@@ -159,8 +200,27 @@ public class ModifiedWMethodEQOracle<A extends UniversalDeterministicAutomaton<?
 						hypOutput = hypothesis.computeOutput(queryWord);
 						sulOracle.processQueries(Collections.singleton(query));
 						
-						if (!Objects.equals(hypOutput, query.getOutput()))
-							return query;
+						// A counterexample is found
+						if (!Objects.equals(hypOutput, query.getOutput())) {
+							int loop = 0;
+							do {
+								// If the querry is different for NB_LOOP times, then there is a problem on non-determinism
+								if(loop++ == NB_LOOP)
+									throw new NondeterministicBehaviorException(
+											"Failed to get an deterministic output for querry: " + query.getInput());
+								// Check if it is a real counterexample or if it is due to non-deterministic behavior
+								DefaultQuery<I, D> testQuery = new DefaultQuery<>(query.getInput());
+								sulOracle.processQueries(Collections.singleton(testQuery));
+								
+								// It is a real counterexample
+								if (Objects.equals(testQuery.getOutput(), query.getOutput())) {
+									return query;
+								}
+								
+								// The old query takes the new query value
+								query = testQuery;
+							} while (!Objects.equals(hypOutput, query.getOutput()));
+						}
 						
 						output = query.getOutput().toString();
 						if (output.endsWith("ConnectionClosed") || output.endsWith("ConnectionClosedEOF") || output.endsWith("ConnectionClosedException")) {

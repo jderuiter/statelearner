@@ -1,0 +1,99 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 1 (0x1)
+    Signature Algorithm: sha256WithRSAEncryption
+        Issuer: C=NL, ST=NIJ, L=Nijmegen, O=RU, OU=RadboudUniversity, CN=RU CA/name=server/emailAddress=me@myhost.mydomain
+        Validity
+            Not Before: May 19 14:02:29 2017 GMT
+            Not After : May 17 14:02:29 2027 GMT
+        Subject: C=NL, ST=NIJ, L=Nijmegen, O=RU, OU=RadboudUniversity, CN=server/name=server/emailAddress=me@myhost.mydomain
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (2048 bit)
+                Modulus:
+                    00:cb:9f:2d:3d:35:64:67:50:a7:b5:50:75:93:95:
+                    82:37:12:8e:bf:5c:92:98:ee:a6:fd:5a:47:f0:d0:
+                    27:9b:c4:48:07:ee:05:36:af:06:34:4a:9a:1e:5e:
+                    d1:ab:e2:73:20:67:9b:d3:a7:95:52:e3:c1:85:fd:
+                    c0:09:69:85:36:36:b8:00:82:85:16:3b:d6:08:37:
+                    81:6e:c8:2d:9a:26:de:c5:eb:ae:ec:ad:7f:47:c9:
+                    73:40:00:51:69:a2:3a:cf:f0:ae:92:2e:b2:0c:63:
+                    5a:85:2a:fa:45:2f:ec:f0:35:b2:eb:a9:c2:cd:0c:
+                    a0:fb:dc:88:9c:a3:e8:17:19:2c:c4:56:df:4c:b3:
+                    3d:57:11:f5:b6:94:c5:a1:0c:a6:0d:cf:28:0e:fe:
+                    3b:a3:4c:a9:b1:5f:7b:cd:2d:e6:06:dc:2d:f2:28:
+                    f4:c9:56:15:27:af:42:8c:53:0a:b3:fb:56:73:4f:
+                    19:f0:5a:7f:d5:cd:c9:d4:1e:0a:cf:8c:90:fc:9c:
+                    0c:4a:6e:b6:4f:94:12:7b:59:a0:b3:19:b0:28:76:
+                    03:72:73:e7:81:c9:f8:ea:18:ec:4d:c5:e7:24:76:
+                    dc:f2:7b:d1:60:ef:24:ed:c3:aa:d4:68:14:7b:d4:
+                    88:fe:40:60:1e:c6:6e:7e:40:15:eb:e8:45:80:b7:
+                    b8:7f
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            Netscape Cert Type: 
+                SSL Server
+            Netscape Comment: 
+                Easy-RSA Generated Server Certificate
+            X509v3 Subject Key Identifier: 
+                07:8D:67:F2:89:95:98:1F:AC:C0:9B:36:6B:7B:8C:31:1A:A4:86:D5
+            X509v3 Authority Key Identifier: 
+                keyid:D2:5A:55:45:D9:F9:9A:D3:22:29:DF:D2:C8:12:2D:EB:D5:C0:4D:F1
+                DirName:/C=NL/ST=NIJ/L=Nijmegen/O=RU/OU=RadboudUniversity/CN=RU CA/name=server/emailAddress=me@myhost.mydomain
+                serial:E9:98:CE:CA:87:1A:C6:35
+
+            X509v3 Extended Key Usage: 
+                TLS Web Server Authentication
+            X509v3 Key Usage: 
+                Digital Signature, Key Encipherment
+            X509v3 Subject Alternative Name: 
+                DNS:server
+    Signature Algorithm: sha256WithRSAEncryption
+         1b:4e:35:97:92:ff:74:55:1a:98:3d:b5:fb:a9:d1:d1:b6:0f:
+         06:f2:c7:74:7d:b3:89:cc:c9:9e:8d:17:5d:e5:b2:2f:d3:4f:
+         c6:68:5d:f7:47:04:50:7c:13:a0:46:d7:79:7f:46:36:72:c7:
+         be:1b:f0:6e:a5:23:01:7c:c1:66:be:5a:7c:d5:c7:4c:e4:7d:
+         95:ed:c9:73:17:f6:26:45:bc:35:89:5d:0c:7b:8a:90:7c:8a:
+         51:30:5e:ea:4c:83:2b:8b:5f:13:0e:3a:e7:05:f2:42:c9:91:
+         88:14:83:3a:00:04:40:a1:91:10:59:2a:18:96:3b:13:f7:7a:
+         94:d9:e8:8a:fa:55:ee:8e:dc:ab:3f:fa:6a:88:1a:66:66:f2:
+         50:53:69:be:27:b7:14:d3:cd:63:dc:89:0c:f6:d9:ee:06:db:
+         e2:8d:ea:68:13:c5:c1:1d:ca:12:25:6d:a8:7b:c9:4a:76:07:
+         e7:5e:05:fd:71:44:5f:7b:ca:41:02:5d:cd:45:d5:0d:79:6a:
+         a1:f0:e6:e7:2a:5c:c2:31:0e:a4:fe:30:cf:ce:83:52:61:1d:
+         c6:9f:dc:22:d5:be:a9:20:39:16:64:a7:e6:5f:3a:23:1b:47:
+         d9:e6:d5:7a:db:1c:b8:d0:c1:7b:3c:86:90:e8:d6:a5:0d:84:
+         1e:b9:32:e2
+-----BEGIN CERTIFICATE-----
+MIIFNTCCBB2gAwIBAgIBATANBgkqhkiG9w0BAQsFADCBmzELMAkGA1UEBhMCTkwx
+DDAKBgNVBAgTA05JSjERMA8GA1UEBxMITmlqbWVnZW4xCzAJBgNVBAoTAlJVMRow
+GAYDVQQLExFSYWRib3VkVW5pdmVyc2l0eTEOMAwGA1UEAxMFUlUgQ0ExDzANBgNV
+BCkTBnNlcnZlcjEhMB8GCSqGSIb3DQEJARYSbWVAbXlob3N0Lm15ZG9tYWluMB4X
+DTE3MDUxOTE0MDIyOVoXDTI3MDUxNzE0MDIyOVowgZwxCzAJBgNVBAYTAk5MMQww
+CgYDVQQIEwNOSUoxETAPBgNVBAcTCE5pam1lZ2VuMQswCQYDVQQKEwJSVTEaMBgG
+A1UECxMRUmFkYm91ZFVuaXZlcnNpdHkxDzANBgNVBAMTBnNlcnZlcjEPMA0GA1UE
+KRMGc2VydmVyMSEwHwYJKoZIhvcNAQkBFhJtZUBteWhvc3QubXlkb21haW4wggEi
+MA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDLny09NWRnUKe1UHWTlYI3Eo6/
+XJKY7qb9Wkfw0CebxEgH7gU2rwY0SpoeXtGr4nMgZ5vTp5VS48GF/cAJaYU2NrgA
+goUWO9YIN4FuyC2aJt7F667srX9HyXNAAFFpojrP8K6SLrIMY1qFKvpFL+zwNbLr
+qcLNDKD73Iico+gXGSzEVt9Msz1XEfW2lMWhDKYNzygO/jujTKmxX3vNLeYG3C3y
+KPTJVhUnr0KMUwqz+1ZzTxnwWn/VzcnUHgrPjJD8nAxKbrZPlBJ7WaCzGbAodgNy
+c+eByfjqGOxNxeckdtzye9Fg7yTtw6rUaBR71Ij+QGAexm5+QBXr6EWAt7h/AgMB
+AAGjggF/MIIBezAJBgNVHRMEAjAAMBEGCWCGSAGG+EIBAQQEAwIGQDA0BglghkgB
+hvhCAQ0EJxYlRWFzeS1SU0EgR2VuZXJhdGVkIFNlcnZlciBDZXJ0aWZpY2F0ZTAd
+BgNVHQ4EFgQUB41n8omVmB+swJs2a3uMMRqkhtUwgdAGA1UdIwSByDCBxYAU0lpV
+Rdn5mtMiKd/SyBIt69XATfGhgaGkgZ4wgZsxCzAJBgNVBAYTAk5MMQwwCgYDVQQI
+EwNOSUoxETAPBgNVBAcTCE5pam1lZ2VuMQswCQYDVQQKEwJSVTEaMBgGA1UECxMR
+UmFkYm91ZFVuaXZlcnNpdHkxDjAMBgNVBAMTBVJVIENBMQ8wDQYDVQQpEwZzZXJ2
+ZXIxITAfBgkqhkiG9w0BCQEWEm1lQG15aG9zdC5teWRvbWFpboIJAOmYzsqHGsY1
+MBMGA1UdJQQMMAoGCCsGAQUFBwMBMAsGA1UdDwQEAwIFoDARBgNVHREECjAIggZz
+ZXJ2ZXIwDQYJKoZIhvcNAQELBQADggEBABtONZeS/3RVGpg9tfup0dG2Dwbyx3R9
+s4nMyZ6NF13lsi/TT8ZoXfdHBFB8E6BG13l/RjZyx74b8G6lIwF8wWa+WnzVx0zk
+fZXtyXMX9iZFvDWJXQx7ipB8ilEwXupMgyuLXxMOOucF8kLJkYgUgzoABEChkRBZ
+KhiWOxP3epTZ6Ir6Ve6O3Ks/+mqIGmZm8lBTab4ntxTTzWPciQz22e4G2+KN6mgT
+xcEdyhIlbah7yUp2B+deBf1xRF97ykECXc1F1Q15aqHw5ucqXMIxDqT+MM/Og1Jh
+Hcaf3CLVvqkgORZkp+ZfOiMbR9nm1XrbHLjQwXs8hpDo1qUNhB65MuI=
+-----END CERTIFICATE-----

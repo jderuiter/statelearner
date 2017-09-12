@@ -30,10 +30,11 @@ public class LearningConfig {
 	static int TYPE_SMARTCARD = 1;
 	static int TYPE_SOCKET = 2;
 	static int TYPE_TLS = 3;
+	static int TYPE_VPN = 4;
 	
 	protected Properties properties;
 	
-	int type = TYPE_SMARTCARD;
+	int type = TYPE_VPN;
 	
 	String output_dir = "output";
 	
@@ -78,6 +79,8 @@ public class LearningConfig {
 				type = TYPE_SOCKET;
 			else if(properties.getProperty("type").equalsIgnoreCase("tls"))
 				type = TYPE_TLS;
+			else if(properties.getProperty("type").equalsIgnoreCase("vpn"))
+				type = TYPE_VPN;
 		}
 		
 		if(properties.getProperty("learning_algorithm").equalsIgnoreCase("lstar") || properties.getProperty("learning_algorithm").equalsIgnoreCase("dhc") || properties.getProperty("learning_algorithm").equalsIgnoreCase("kv") || properties.getProperty("learning_algorithm").equalsIgnoreCase("ttt") || properties.getProperty("learning_algorithm").equalsIgnoreCase("mp") || properties.getProperty("learning_algorithm").equalsIgnoreCase("rs"))
