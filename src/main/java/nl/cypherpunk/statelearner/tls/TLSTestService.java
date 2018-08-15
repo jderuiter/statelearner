@@ -1332,16 +1332,14 @@ public class TLSTestService {
 				return sendAlert1100();
 			} else {
 				System.out.println("Unknown input symbol (" + inAction + ")...");
-				System.exit(0);
+				throw new RuntimeException("Unknown input Symbol (" + inAction + ")...");
 			}
 		}
 		catch(SocketException e) {
 			//String outAction = "ConnectionClosedException";
 			String outAction = "ConnectionClosed";
-
-			return outAction;
+                        return outAction;
 		}
-		return null;
 	}
 	
 	public void loadServerKey() throws KeyStoreException, NoSuchAlgorithmException, CertificateException, IOException, UnrecoverableKeyException, NoSuchProviderException, InvalidAlgorithmParameterException, InvalidKeySpecException {

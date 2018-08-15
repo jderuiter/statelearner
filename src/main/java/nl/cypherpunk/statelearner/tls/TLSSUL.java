@@ -78,7 +78,7 @@ public class TLSSUL implements SUL<String, String> {
 			tls.reset();
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.exit(0);
+			throw new RuntimeException(e);
 		}	
 	}
 

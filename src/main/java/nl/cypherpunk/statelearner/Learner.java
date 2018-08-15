@@ -352,7 +352,5 @@ public class Learner {
 	
 		Learner learner = new Learner(config);
 		learner.learn();
-		
-		System.exit(0);
 	}
 }

@@ -86,7 +86,7 @@ public class SCSUL implements SUL<String, String> {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.exit(0);
+			throw new RuntimeException(e);
 		}		
 	}
 	
