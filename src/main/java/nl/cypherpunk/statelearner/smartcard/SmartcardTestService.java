@@ -171,6 +171,16 @@ public class SmartcardTestService {
 			String returnValue = "SW:" + Integer.toHexString(response.getSW());
 		
 			if(response.getData().length > 0) {
+				String strData = Utils.bytesToHex(response.getData());
+
+				if(strData.contains("9F27")) {
+					returnValue += ",AC:" + strData.substring(strData.indexOf("9F27")+6, strData.indexOf("9F27")+8);
+				}
+				else if(command.contains("GENERATE_AC")) {
+					// Visa card?
+					returnValue += ",AC:" + strData.substring(4, 6);
+				}
+
 				returnValue += ",Len:" + response.getData().length;
 			}
 			

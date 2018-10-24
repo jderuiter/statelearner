@@ -36,11 +36,9 @@ import de.learnlib.algorithms.kv.mealy.KearnsVaziraniMealy;
 import de.learnlib.algorithms.lstargeneric.mealy.ExtensibleLStarMealyBuilder;
 import de.learnlib.algorithms.malerpnueli.MalerPnueliMealy;
 import de.learnlib.algorithms.rivestschapire.RivestSchapireMealy;
-import de.learnlib.algorithms.ttt.base.TTTState;
 import de.learnlib.algorithms.ttt.mealy.TTTLearnerMealy;
 import de.learnlib.api.EquivalenceOracle;
 import de.learnlib.api.LearningAlgorithm;
-import de.learnlib.api.SUL;
 import de.learnlib.cache.mealy.MealyCacheOracle;
 import de.learnlib.counterexamples.AcexLocalSuffixFinder;
 import de.learnlib.eqtests.basic.RandomWordsEQOracle.MealyRandomWordsEQOracle;
@@ -56,6 +54,7 @@ import net.automatalib.automata.transout.MealyMachine;
 import net.automatalib.util.graphs.dot.GraphDOT;
 import net.automatalib.words.Word;
 import net.automatalib.words.impl.SimpleAlphabet;
+import nl.cypherpunk.statelearner.LogOracle.MealyLogOracle;
 import nl.cypherpunk.statelearner.ModifiedWMethodEQOracle.MealyModifiedWMethodEQOracle;
 import nl.cypherpunk.statelearner.smartcard.SCConfig;
 import nl.cypherpunk.statelearner.smartcard.SCSUL;
@@ -63,15 +62,15 @@ import nl.cypherpunk.statelearner.socket.SocketConfig;
 import nl.cypherpunk.statelearner.socket.SocketSUL;
 import nl.cypherpunk.statelearner.tls.TLSConfig;
 import nl.cypherpunk.statelearner.tls.TLSSUL;
-import nl.cypherpunk.statelearner.LogOracle.MealyLogOracle;
 
 /**
  * @author Joeri de Ruiter (joeri@cs.ru.nl)
  */
 public class Learner {
 	LearningConfig config;
+	boolean combine_query = false;
 	SimpleAlphabet<String> alphabet;
-	SUL<String, String> sul;
+	StateLearnerSUL<String, String> sul;
 	SULOracle<String, String> memOracle;
 	MealyLogOracle<String, String> logMemOracle;
 	MealyCounterOracle<String, String> statsMemOracle;
@@ -111,7 +110,9 @@ public class Learner {
 			log.log(Level.INFO, "Using socket SUL");
 			
 			// Create the socket SUL
-			sul = new SocketSUL(new SocketConfig(config));
+			SocketConfig socketConfig = new SocketConfig(config);
+			sul = new SocketSUL(socketConfig);
+			combine_query = socketConfig.getCombineQuery();
 			alphabet = ((SocketSUL)sul).getAlphabet();			
 		}
 		else if(config.type == LearningConfig.TYPE_TLS) {
@@ -126,11 +127,11 @@ public class Learner {
 		loadEquivalenceAlgorithm(config.eqtest, alphabet, sul);
 	}
 	
-	public void loadLearningAlgorithm(String algorithm, SimpleAlphabet<String> alphabet, SUL<String, String> sul) throws Exception {
+	public void loadLearningAlgorithm(String algorithm, SimpleAlphabet<String> alphabet, StateLearnerSUL<String, String> sul) throws Exception {
 		// Create the membership oracle
 		//memOracle = new SULOracle<String, String>(sul);
 		// Add a logging oracle
-		logMemOracle = new MealyLogOracle<String, String>(sul, LearnLogger.getLogger("learning_queries"));		
+		logMemOracle = new MealyLogOracle<String, String>(sul, LearnLogger.getLogger("learning_queries"), combine_query);
         // Count the number of queries actually sent to the SUL
 		statsMemOracle = new MealyCounterOracle<String, String>(logMemOracle, "membership queries to SUL");
 		// Use cache oracle to prevent double queries to the SUL
@@ -170,12 +171,12 @@ public class Learner {
 		}		
 	}
 	
-	public void loadEquivalenceAlgorithm(String algorithm, SimpleAlphabet<String> alphabet, SUL<String, String> sul) throws Exception {
+	public void loadEquivalenceAlgorithm(String algorithm, SimpleAlphabet<String> alphabet, StateLearnerSUL<String, String> sul) throws Exception {
 		//TODO We could combine the two cached oracle to save some queries to the SUL
 		// Create the equivalence oracle
 		//eqOracle = new SULOracle<String, String>(sul);
 		// Add a logging oracle
-		logEqOracle = new MealyLogOracle<String, String>(sul, LearnLogger.getLogger("equivalence_queries"));
+		logEqOracle = new MealyLogOracle<String, String>(sul, LearnLogger.getLogger("equivalence_queries"), combine_query);
 		// Add an oracle that counts the number of queries
 		statsEqOracle = new MealyCounterOracle<String, String>(logEqOracle, "equivalence queries to SUL");
 		// Use cache oracle to prevent double queries to the SUL

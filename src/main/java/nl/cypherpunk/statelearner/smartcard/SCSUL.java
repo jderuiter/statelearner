@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import net.automatalib.words.impl.SimpleAlphabet;
+import nl.cypherpunk.statelearner.StateLearnerSUL;
 import de.learnlib.api.SUL;
 
 /**
@@ -27,7 +28,7 @@ import de.learnlib.api.SUL;
  * 
  * @author Joeri de Ruiter (joeri@cs.ru.nl)
  */
-public class SCSUL implements SUL<String, String> {
+public class SCSUL implements StateLearnerSUL<String, String> {
 	SmartcardTestService scTestService;
 	SimpleAlphabet<String> alphabet;
 	String[] prefix = {};

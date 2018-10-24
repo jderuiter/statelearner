@@ -18,14 +18,13 @@ package nl.cypherpunk.statelearner.tls;
 
 import java.util.Arrays;
 
-import de.learnlib.api.SUL;
 import net.automatalib.words.impl.SimpleAlphabet;
-import nl.cypherpunk.statelearner.tls.TLSTestService;
+import nl.cypherpunk.statelearner.StateLearnerSUL;
 
 /**
  * @author Joeri de Ruiter (joeri@cs.ru.nl)
  */
-public class TLSSUL implements SUL<String, String> {
+public class TLSSUL implements StateLearnerSUL<String, String> {
 	SimpleAlphabet<String> alphabet;
 	TLSTestService tls;
 	

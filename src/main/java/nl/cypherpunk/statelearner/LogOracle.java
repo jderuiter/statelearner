@@ -20,62 +20,93 @@ import java.util.Collection;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
-import net.automatalib.words.Word;
-import net.automatalib.words.WordBuilder;
 import de.learnlib.api.MembershipOracle;
 import de.learnlib.api.MembershipOracle.MealyMembershipOracle;
 import de.learnlib.api.Query;
-import de.learnlib.api.SUL;
 import de.learnlib.logging.LearnLogger;
+import net.automatalib.words.Word;
+import net.automatalib.words.WordBuilder;
 
 // Based on SULOracle from LearnLib by Falk Howar and Malte Isberner
 @ParametersAreNonnullByDefault
 public class LogOracle<I, D> implements MealyMembershipOracle<I,D> {
 	public static class MealyLogOracle<I,O> extends LogOracle<I,O> {
-		public MealyLogOracle(SUL<I, O> sul, LearnLogger logger) {
-			super(sul, logger);
+		public MealyLogOracle(StateLearnerSUL<I, O> sul, LearnLogger logger, boolean combine_query) {
+			super(sul, logger, combine_query);
 		}
 	}
 	
 	LearnLogger logger;
-	SUL<I, D> sul;
+	StateLearnerSUL<I, D> sul;
+	boolean combine_query = false;
    
-    public LogOracle(SUL<I,D> sul, LearnLogger logger) {        
+    public LogOracle(StateLearnerSUL<I, D> sul, LearnLogger logger, boolean combine_query) {
         this.sul = sul;
         this.logger = logger;
+        this.combine_query = combine_query;
     }
     
-    @Override
-	public Word<D> answerQuery(Word<I> prefix, Word<I> suffix) {
+    public Word<D> answerQueryCombined(Word<I> prefix, Word<I> suffix) {
+		Word<I> query = prefix.concat(suffix);
+		Word<D> response = null;
+		Word<D> responsePrefix = null;
+		Word<D> responseSuffix = null;
+
+		try {
+			this.sul.pre();
+			response = this.sul.stepWord(query);
+			responsePrefix = response.subWord(0, prefix.length());
+			responseSuffix = response.subWord(prefix.length(), response.length());
+
+			logger.logQuery("[" + prefix.toString() + " | " + suffix.toString() + " / " + responsePrefix.toString() + " | " + responseSuffix.toString() + "]");
+		} finally {
+			sul.post();
+		}
+
+		// Only return the responses to the suffix
+		return responseSuffix;
+    }
+
+	public Word<D> answerQuerySteps(Word<I> prefix, Word<I> suffix) {
+		WordBuilder<D> wbPrefix = new WordBuilder<>(prefix.length());
+		WordBuilder<D> wbSuffix = new WordBuilder<>(suffix.length());
+
 		this.sul.pre();
 		try {
 			// Prefix: Execute symbols, only log output
-			WordBuilder<D> wbPrefix = new WordBuilder<>(prefix.length());
 			for(I sym : prefix) {
 				wbPrefix.add(this.sul.step(sym));
 			}
 			
 			// Suffix: Execute symbols, outputs constitute output word
-			WordBuilder<D> wbSuffix = new WordBuilder<>(suffix.length());
 			for(I sym : suffix) {
 				wbSuffix.add(this.sul.step(sym));
 			}
 		
 	    	logger.logQuery("[" + prefix.toString() + " | " + suffix.toString() +  " / " + wbPrefix.toWord().toString() + " | " + wbSuffix.toWord().toString() + "]");
-	    	
-			return wbSuffix.toWord();
 		}
 		finally {
 			sul.post();
 		}
-    }    
+
+		return wbSuffix.toWord();
+    }
+
+    @Override
+	public Word<D> answerQuery(Word<I> prefix, Word<I> suffix) {
+		if(combine_query) {
+			return answerQueryCombined(prefix, suffix);
+		} else {
+			return answerQuerySteps(prefix, suffix);
+		}
+    }
     
 	@Override
     @SuppressWarnings("unchecked")
 	public Word<D> answerQuery(Word<I> query) {
 		return answerQuery((Word<I>)Word.epsilon(), query);
     }
-    
+
     @Override
     public MembershipOracle<I, Word<D>> asOracle() {
     	return this;
