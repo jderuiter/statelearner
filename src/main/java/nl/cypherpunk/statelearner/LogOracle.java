@@ -55,6 +55,11 @@ public class LogOracle<I, D> implements MealyMembershipOracle<I,D> {
 		try {
 			this.sul.pre();
 			response = this.sul.stepWord(query);
+
+			if(query.length() != response.length()) {
+				throw new RuntimeException("Received number of output symbols not equal to number of input symbols (" + query.length() + " input symbols vs " + response.length() + " output symbols)");
+			}
+
 			responsePrefix = response.subWord(0, prefix.length());
 			responseSuffix = response.subWord(prefix.length(), response.length());
 
