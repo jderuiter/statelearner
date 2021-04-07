@@ -7,9 +7,10 @@ s.listen(1)
 (client, address) = s.accept()
 
 state = 0
+response = ""
 
 while 1:
-  cmd = client.recv(1024).strip()
+  cmd = client.recv(1024).decode("utf-8").strip()
 
   if cmd == "":
     break
@@ -26,4 +27,4 @@ while 1:
     state = 1 - state
     response = "E"
 
-  client.sendall(response + "\n")
+  client.sendall(bytes(response + "\n", 'utf-8'))
