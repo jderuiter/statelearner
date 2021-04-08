@@ -27,4 +27,4 @@ while 1:
     state = 1 - state
     response = "E"
 
-  client.sendall(bytes(response + "\n", 'utf-8'))
+  client.sendall((response + "\n").encode())
