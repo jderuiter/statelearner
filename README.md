@@ -1,3 +1,5 @@
+**This repository moved to https://codeberg.org/cypherpunk/statelearner**
+
 # StateLearner
 
 StateLearner is a tool that can learn state machines from implementations using a black-box approach. It makes use of LearnLib for the learning specific algorithms.
